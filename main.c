@@ -10,19 +10,16 @@
 #include <time.h>
 #include "definiciones.h"
 
-//FUNCTIONS
+//FUNCIONES
 extern void cheypsolver(double initcond,int idn,int idf);
 extern void transicionRT(double cheypvalue,int idn,int idf);
 extern void savefilesTimesDist(double graba1,double graba2);
 extern void savefilesCheypBias(double graba1,double graba2,double graba3,double graba4,double graba5,double graba6);
 extern void openfiles(void);
 extern void statistical(double runtime,double tumbletime,int count);
-extern void savefilesCheypDist(double graba1,double graba2);
 extern void initializearrays(void);
 extern void reboot(void);
 extern void meanbias(void);
-extern double crossfla(void);
-extern void savefilesFlaState(int graba1,int graba2,int graba3,int graba4,double graba5);
 //VARIABLES
 extern double tmpcheyp[nbac][nfla];
 extern double MU[nbac][nfla];
@@ -43,8 +40,6 @@ extern double vartumble;
 extern double biast[nbac];
 extern double biasr[nbac];
 extern int shift[nbac][nfla];
-extern int fladir[nbac][nfla];
-extern double crosscor[nbac];
 extern int globaldoingshift[nbac];
 extern int datacounter[nbac];
 extern int globaldatacounter;
@@ -54,14 +49,11 @@ extern double mu;
 extern double MUcut;
 extern double meantENbias;
 extern double meanrENbias;
-extern double meanENCrossFla;
 extern double tmpbiast[nbac];
 extern double tmpbiasr[nbac];
 extern int bootcount;
-extern double savespace;
 extern double meancheyp;
-extern double CrossFlaAVT;
-
+int mintrans= (int)nfla;
 //MAIN
 
 int main(void){
@@ -76,15 +68,12 @@ while(1){
    for(int k=0;k < nbac;k++){
         int sumshift=0;
 
-        //Obtains the molar concentration of CheY-P for each flagella and the rotation direction at each time
+        //Obtains the molar concentration of CheY-P for each flagella and the rotation direction
         for(int j=0;j < nfla;j++){
             cheypsolver(tmpcheyp[k][j],k,j);
             transicionRT(tmpcheyp[k][j],k,j);
             sumshift= sumshift + shift[k][j];
-            if(shift[k][j]==0){fladir[k][j]=1;}
-            else if(shift[k][j]==1){fladir[k][j]=0;};
         };
-
     //Selects Run or Tumble Motion (or CCW oe CW for nfla=1) as a function of the rotation direction, transitions are controled by globaldoingshift[k]
     globaldoingshift[k]=0;
     int bloqueo=0;
@@ -94,18 +83,18 @@ while(1){
                 doingshift[k][j]=0;
                 if(sumshift == nfla){ // All flagella are in CCW mode -> transition to Run
                     globaldoingshift[k]=2;
-                    //j=2*nfla;
+                    j=2*nfla;
                     bloqueo =1;
                 }
                 else{globaldoingshift[k]=0;}; // At least one flagella remains in CW mode and bacteria remains in Tumble mode
             }
             if(bloqueo==0){
-                if(doingshift[k][j] == 1){ // At least one flagella went from CCW to CW, sufficient condition by veto rule to induce a Tumble
+                if(doingshift[k][j] == 1 ){ // At least one flagella went from CCW to CW, sufficient condition by veto rule to induce a Tumble
                     doingshift[k][j]=0;
                     if(RTstate[k]==0){ // Bacteria was in Run mode -> transition to Tumble
                         globaldoingshift[k]=1;
                         j=2*nfla;
-                    };
+                    }
                 }
                 else{globaldoingshift[k]=0;}; // No transition occurs
             };
@@ -115,7 +104,7 @@ while(1){
             globaldoingshift[k]=0;
             //To obtain TTD y RTD
             tumbletimes[k]=tiempo;
-            if(datacounter[k] > 2){
+            if(datacounter[k] > mintrans){
                 tmpruntimes[k]=tiempo-runtimes[k];
                 biasr[k]=biasr[k] +tmpruntimes[k];
             };
@@ -125,7 +114,7 @@ while(1){
             globaldoingshift[k]=0;
             //To obtain TTD y RTD
             runtimes[k]=tiempo;
-            if(datacounter[k] > 2){
+            if(datacounter[k] > mintrans){
                 tmptumbletimes[k]=tiempo-tumbletimes[k];
                 //savefilesTimesDist(tmpruntimes[k],tmptumbletimes[k]);
                 biast[k]=biast[k]+tmptumbletimes[k];
@@ -134,39 +123,20 @@ while(1){
             };
             RTstate[k]=0; // Run mode
             datacounter[k]++;
-            if(datacounter[k] > 2){
+            if(datacounter[k] > mintrans){
                 globaldatacounter++;
                 statistical(tmpruntimes[k],tmptumbletimes[k],globaldatacounter);
             };
         };
-
-       //if(RTstate[k]==1){
-            //crosscor[k]=1.0/3.0*((double)fladir[k][0]*(double)fladir[k][1]+(double)fladir[k][0]*(double)fladir[k][2]+(double)fladir[k][1]*(double)fladir[k][2]);
-            //crosscor[k]=((double)fladir[k][0]*(double)fladir[k][1]);
-            //crosscor[k]=((double)fladir[k][0]*(double)fladir[k][0]);
-        //printf("Cross Cor Fla ind %5.5f \n", crosscor[k]);
-       // };
-
     };
     meanbias();// Function to obtain ensmable bias
-
-    // Saves data from one flagella to obtain Steady state PDF
-    if(tiempo > 10.0 && fmod(dticks,1000.0)==0.0){
-        //savefilesCheypDist(tmpcheyp[0][0],meancheyp/(nfla*nbac*(dticks)));
-        //savefilesCheypDist(tmpcheyp[0][0],tiempo);
-        savefilesFlaState(fladir[0][0],fladir[0][1],fladir[0][2],RTstate[0],tiempo);
-        //printf("Fladir %5i \n", fladir[0][0]);
-    };
-
-
 //Time Evolution:
 
     dticks = dticks +1.0;
     tiempo=dticks*ddt;
-    CrossFlaAVT = CrossFlaAVT+ crossfla();
 
         if(fmod(dticks,1000000.0)==0.0){
-//            printf("<CheyP> %5.5f \n",meancheyp/(nfla*nbac*(dticks))); // Gives mean value of chey-p, Steady mean value obtain analitically -> <chey-p>=1.888 for mu=2.1.
+//  	      printf("<CheyP> %5.5f \n",meancheyp/(nfla*nbac*(dticks)));
             printf("time %5.5f \n",tiempo);
             printf("Complete %: %5.5f \n",100.0*tiempo/(dtickshut));
 //            printf("mean run time %5.5f \n",meanrun/(double)globaldatacounter);
@@ -174,15 +144,41 @@ while(1){
 //            printf("mean tumble time %5.5f \n",meantumble/(double)globaldatacounter);
 //            printf("sigma tumble time %5.5f \n",sqrt(vartumble/(double)globaldatacounter));
             printf("bias tumble %5.5f \n",meantENbias);
-            printf("Cross Cor Fla %5.5f \n",CrossFlaAVT/(double)dticks);
-//            printf("COUNTER %5if \n",globaldatacounter);
-//            printf("Mu %5.5f \n",MU[0][0]);
 //            printf("bias run %5.5f \n",meanrENbias);
 //            printf("bias sum %5.5f \n",meanrENbias+meantENbias);
+//            printf("GC: %4i \n",globaldatacounter);
         };
+
+        //For MU reboot
         if(tiempo > dtickshut){
+            bootcount++;
+            for(int k=0;k < nbac;k++){
+                for(int j=0;j < nfla;j++){
+                    MU[k][j]=MU[k][j]+deltaMU;
+                };
+            };
+            printf("GC: %4i \n",globaldatacounter);
+            if(globaldatacounter < mintrans){
+                if(RTstate[0]== 0){
+                    meanrun=tiempo;
+                    meantumble=0.0;
+                    meantENbias=0.0;
+                    globaldatacounter=1;
+                }
+                else{
+                    meantumble=tiempo;
+                    meanrun=0.0;
+                    meantENbias=1.0;
+                    globaldatacounter=1;
+                };
+            };
+            savefilesCheypBias(MU[0][0],meantENbias,meanrun/(double)globaldatacounter,meantumble/(double)globaldatacounter,sqrt(varrun/(double)globaldatacounter),sqrt(vartumble/(double)globaldatacounter));
+            printf("MU: %3.4f \n",MU[0][0]);
+            reboot();
+            if(MU[0][0] > MUcut){
                 exit(1234);
             };
+        };
 };
 
 return 0;

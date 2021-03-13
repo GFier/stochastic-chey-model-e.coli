@@ -36,7 +36,6 @@ extern double frec;
 extern double frecVA;
 extern double meanrENbias;
 extern double meantENbias;
-extern double meanENCrossFla;
 extern double meanrbias;
 extern double meantbias;
 extern double varrENbias;
@@ -45,11 +44,11 @@ extern double varrbias;
 extern double vartbias;
 extern double tmpbiast[nbac];
 extern double tmpbiasr[nbac];
-extern double crosscor[nbac];
 extern double meancheyp;
 
-// Calculates the sum of a variable to obtain a mean value
+//Calcula el <V.A.> sin dividir por el total
 double medio(double tmpmedio,double var){
+
     tmpmedio = tmpmedio + var;
     return  tmpmedio;
 };
@@ -59,7 +58,7 @@ double generateGaussianNoise(double mu, double sigma){ //Box MIller Method
 	static const double epsilon = DBL_MIN;//std::numeric_limits<double>::min();
 	double z1=0.0;
 
-	bool generate=0;
+	bool generate;
 	generate = !generate;
 
 	if (!generate)
@@ -96,30 +95,27 @@ double temcheyp=0.0;
     if(tmpcheyp[idn][idf] < 0.0){cheyp[idn][idf]=-cheyp[idn][idf];tmpcheyp[idn][idf] = -tmpcheyp[idn][idf];};
     if(cheyp[idn][idf] < 0.0){printf("cheyp error: %3.3f \n",cheyp[idn][idf]);exit(5);};
 
-    //printf("CHEYP: %3.3f \n",cheyp[idn][idf]);
     meancheyp=medio(meancheyp,tmpcheyp[idn][idf]);
 };
 
-// Selects the mode for each flagella
 void transicionRT(double cheypvalue,int idn,int idf){
 
-    if(shift[idn][idf]==1 && cheypvalue < CRT){ //CCW
+    if(shift[idn][idf]==1 && cheypvalue < CRT){ //Run Motion
         shift[idn][idf]=1;
     }
-    else if(shift[idn][idf]==1 && cheypvalue >= CRT){ // Transition from CCW to CW
+    else if(shift[idn][idf]==1 && cheypvalue >= CRT){ // Transition from Run to Tumble
         doingshift[idn][idf]=1;
         shift[idn][idf]=0;
     }
-    else if(shift[idn][idf]==0 && cheypvalue > CTR){ // CW
+    else if(shift[idn][idf]==0 && cheypvalue > CTR){ // Tumble Motion
         shift[idn][idf]=0;
     }
-    else if(shift[idn][idf]==0 && cheypvalue <= CTR){ // Transition from CW to CCW
+    else if(shift[idn][idf]==0 && cheypvalue <= CTR){ // Transition from Tumble to Run
         doingshift[idn][idf]=2;
         shift[idn][idf]=1;
     };
 };
 
-// Function to obtain mean and variance for run and tumble times
 void statistical(double runtime,double tumbletime,int count){
 double tmpmeanrun=0.0;
 double tmpmeantumble=0.0;
@@ -141,11 +137,10 @@ double tmpmeanbiasR=0.0;double tmpmeanbiasT=0.0;double tmpvarbiasR=0.0;double tm
     for(int k=0;k < nbac;k++){
         tmpmeanbiasR=tmpmeanbiasR+tmpbiasr[k];
         tmpmeanbiasT=tmpmeanbiasT+tmpbiast[k];
-        //tmpcrossfla=tmpcrossfla+crosscor[k];
+
     };
     meanrENbias=tmpmeanbiasR/(double)nbac;
     meantENbias=tmpmeanbiasT/(double)nbac;
-    //meanENCrossFla=tmpcrossfla/(double)nbac;
 
     for(int k=0;k < nbac;k++){
         tmpvarbiasR=tmpvarbiasR+(tmpbiasr[k]-meanrENbias)*(tmpbiasr[k]-meanrENbias);
@@ -153,15 +148,4 @@ double tmpmeanbiasR=0.0;double tmpmeanbiasT=0.0;double tmpvarbiasR=0.0;double tm
     };
     varrENbias=tmpmeanbiasR/(double)nbac;
     vartENbias=tmpmeanbiasT/(double)nbac;
-};
-
-double crossfla(void){
-double crf=0.0;double tmpcrossfla=0.0;
-
-    for(int k=0;k < nbac;k++){
-        tmpcrossfla=tmpcrossfla+(crosscor[k]);
-    };
-    crf=tmpcrossfla/(double)nbac;
-
-return crf;
 };

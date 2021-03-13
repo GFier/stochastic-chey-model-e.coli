@@ -375,15 +375,38 @@
 
 1557324582 /home/mel/Desktop/Code for RSOC/reboot.h
 
-1574369437 source:/home/mel/Desktop/Code for RSOC For Dist/definiciones.c
+1574192857 source:/home/mel/Desktop/Code for RSOC Bias/definiciones.c
 	"definiciones.h"
 	<stdio.h>
 	<stdlib.h>
 	"definiciones.h"
 
-1574365331 /home/mel/Desktop/Code for RSOC For Dist/definiciones.h
+1574192132 /home/mel/Desktop/Code for RSOC Bias/definiciones.h
 
-1574276333 source:/home/mel/Desktop/Code for RSOC For Dist/RATtransition.c
+1574179516 source:/home/mel/Desktop/Code for RSOC Bias/reboot.c
+	"reboot.h"
+
+1557324582 /home/mel/Desktop/Code for RSOC Bias/reboot.h
+
+1574193268 source:/home/mel/Desktop/Code for RSOC Bias/export.c
+	"export.h"
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+
+1545936585 /home/mel/Desktop/Code for RSOC Bias/export.h
+
+1574193325 source:/home/mel/Desktop/Code for RSOC Bias/main.c
+	"main.h"
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	"definiciones.h"
+
+1548955935 /home/mel/Desktop/Code for RSOC Bias/main.h
+
+1574193339 source:/home/mel/Desktop/Code for RSOC Bias/RATtransition.c
 	<math.h>
 	<stdio.h>
 	<stdlib.h>
@@ -393,20 +416,23 @@
 	<stdbool.h>
 	"definiciones.h"
 
-1574179516 source:/home/mel/Desktop/Code for RSOC For Dist/reboot.c
-	"reboot.h"
+1574277498 source:/home/mel/Desktop/Code for RSOC For Bias/definiciones.c
+	"definiciones.h"
+	<stdio.h>
+	<stdlib.h>
+	"definiciones.h"
 
-1557324582 /home/mel/Desktop/Code for RSOC For Dist/reboot.h
+1574276421 /home/mel/Desktop/Code for RSOC For Bias/definiciones.h
 
-1574347487 source:/home/mel/Desktop/Code for RSOC For Dist/export.c
+1574277492 source:/home/mel/Desktop/Code for RSOC For Bias/export.c
 	"export.h"
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
 
-1545936585 /home/mel/Desktop/Code for RSOC For Dist/export.h
+1545936585 /home/mel/Desktop/Code for RSOC For Bias/export.h
 
-1574347905 source:/home/mel/Desktop/Code for RSOC For Dist/main.c
+1574276835 source:/home/mel/Desktop/Code for RSOC For Bias/main.c
 	"main.h"
 	<math.h>
 	<stdio.h>
@@ -414,17 +440,9 @@
 	<time.h>
 	"definiciones.h"
 
-1548955935 /home/mel/Desktop/Code for RSOC For Dist/main.h
+1548955935 /home/mel/Desktop/Code for RSOC For Bias/main.h
 
-1580326432 source:/home/mel/Desktop/Code1/export.c
-	"export.h"
-	<stdio.h>
-	<stdlib.h>
-	<math.h>
-
-1545936585 /home/mel/Desktop/Code1/export.h
-
-1580320509 source:/home/mel/Desktop/Code1/RATtransition.c
+1574277057 source:/home/mel/Desktop/Code for RSOC For Bias/RATtransition.c
 	<math.h>
 	<stdio.h>
 	<stdlib.h>
@@ -434,20 +452,43 @@
 	<stdbool.h>
 	"definiciones.h"
 
-1580400436 /home/mel/Desktop/Code1/definiciones.h
-
-1574179516 source:/home/mel/Desktop/Code1/reboot.c
+1574179516 source:/home/mel/Desktop/Code for RSOC For Bias/reboot.c
 	"reboot.h"
 
-1557324582 /home/mel/Desktop/Code1/reboot.h
+1557324582 /home/mel/Desktop/Code for RSOC For Bias/reboot.h
 
-1580400677 source:/home/mel/Desktop/Code1/definiciones.c
+1574277492 source:/home/mel/Desktop/Code2/export.c
+	"export.h"
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+
+1545936585 /home/mel/Desktop/Code2/export.h
+
+1574277057 source:/home/mel/Desktop/Code2/RATtransition.c
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<limits.h>
+	<float.h>
+	<stdbool.h>
+	"definiciones.h"
+
+1576184032 /home/mel/Desktop/Code2/definiciones.h
+
+1574179516 source:/home/mel/Desktop/Code2/reboot.c
+	"reboot.h"
+
+1557324582 /home/mel/Desktop/Code2/reboot.h
+
+1576183800 source:/home/mel/Desktop/Code2/definiciones.c
 	"definiciones.h"
 	<stdio.h>
 	<stdlib.h>
 	"definiciones.h"
 
-1580400429 source:/home/mel/Desktop/Code1/main.c
+1576183337 source:/home/mel/Desktop/Code2/main.c
 	"main.h"
 	<math.h>
 	<stdio.h>
@@ -455,5 +496,5 @@
 	<time.h>
 	"definiciones.h"
 
-1548955935 /home/mel/Desktop/Code1/main.h
+1548955935 /home/mel/Desktop/Code2/main.h
 
