@@ -22,7 +22,7 @@ Scientific background availabe in Preprint at bioRxiv [Stochastic model for the 
 		nfla=1; 
 		nbac=1; 
 
-	In deficiones.c change: 
+	In `definciones.c` change: 
 
 		double dtickshut = 15000.0; 
 
