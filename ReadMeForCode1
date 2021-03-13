@@ -1,0 +1,31 @@
+Code1 can be used for:
+
+Obtain steady state probability density function for molar Chey-P concentration, where the following changes must be done:
+
+	In definiciones.h change: 
+
+		nfla=1;
+		nbac=1;
+
+	In deficiones.c change:
+
+		double dtickshut = 15000.0;
+
+	In main.c:
+
+		uncomment ->     if(tiempo > 100.0 && fmod(dticks,100.0)==0.0){
+		      		  savefilesCheypDist(tmpcheyp[0][0],meancheyp/(nfla*nbac*(dticks)));
+		    		};
+
+		File savefilesCheypDist.dat will have two columns separated by comma (CSV) where the first column is Chey-P values obtained from
+		numerical integration and the second one is the mean value obtained over time.
+
+ 
+The second use of thsi code is to obtain the RTD and TTD:
+
+	The code is set to obtain RTD and TTD for non unstimulated scenarios (Tumble bias=0.15). Data is saved in the savefilesTimesDist.dat file where the first column 
+	saves the Runs time and the second column saves the Tumbles time.
+	The code uses 3 flagella per bacteria and has "nbac" different independent realizations, that is averaging over an ensamble.
+	If you want to obtain the Run and Tumble time distributions for other Tumble bias we recommend first to use code2 to find what mu belongs to the Tumble bias you are looking for. 
+
+
