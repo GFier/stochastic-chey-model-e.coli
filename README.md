@@ -5,11 +5,11 @@ Scientific background availabe in Preprint at bioRxiv [Stochastic model for the 
 
 ### Code files:
 
-- definciones.c: File for initial setup of parameters for numerical simulations.
-- definciones.h: File for setting number of bacteria (nbac) and number of flagella (nfla)
-- main.c : File with code flow.
-- export.c: File where .dat files are created for saving data.
-- RATtransition: File where numerical simulations, flagella states and flagellar transitions are calculated.
+- `definciones.c`: File for initial setup of parameters for numerical simulations.
+- `definciones.h`: File for setting number of bacteria (nbac) and number of flagella (nfla)
+- `main.c` : File with code flow.
+- `export.c`: File where .dat files are created for saving data.
+- `RATtransition`: File where numerical simulations, flagella states and flagellar transitions are calculated.
 
 ### This branch can be used for two purposees:
 
@@ -36,4 +36,4 @@ Scientific background availabe in Preprint at bioRxiv [Stochastic model for the 
 		numerical integration and the second one is the mean value obtained over time.
     
 
-## For more information see Usage_notes.pdf 
+## For more information see `Usage_notes.pdf` .
