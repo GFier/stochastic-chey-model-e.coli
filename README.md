@@ -17,7 +17,7 @@ Scientific background availabe in Preprint at bioRxiv [Stochastic model for the 
 	saves the Runs time and the second column saves the Tumbles time.
 
 -  Obtain steady state probability density function for molar Chey-P concentration, where the following changes must be done: \
-	In definiciones.h change:  
+	In `definciones.h` change:  
 
 		nfla=1; 
 		nbac=1; 
@@ -26,7 +26,7 @@ Scientific background availabe in Preprint at bioRxiv [Stochastic model for the 
 
 		double dtickshut = 15000.0; 
 
-	In main.c: 
+	In `main.c`: 
 
 		uncomment ->     if(tiempo > 100.0 && fmod(dticks,100.0)==0.0){ 
 		      		  savefilesCheypDist(tmpcheyp[0][0],meancheyp/(nfla*nbac*(dticks))); 
