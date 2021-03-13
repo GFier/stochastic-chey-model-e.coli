@@ -1,4 +1,4 @@
-# C-Code developed for modeling stochastically the CheY-P molar-ity in the neighbourhood of flagella motors
+# C-Code developed for modeling stochastically the CheY-P molarity in the neighbourhood of flagella motors
 Scientific background availabe in Preprint at bioRxiv [Stochastic model for the CheY-P molarity in the neighbourhood of E. coli flagella motors] (https://www.biorxiv.org/content/10.1101/831990v1.full).
 
 ## Code1 instructions
